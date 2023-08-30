@@ -1,0 +1,15 @@
+[run]
+dynamic_context = test_function
+branch = True
+source = faces
+data_file = .coverage
+command_line = -m unittest
+
+[report]
+show_missing = True
+skip_empty = True
+
+[html]
+directory = .htmlcov
+show_contexts = True
+

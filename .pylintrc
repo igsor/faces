@@ -1,0 +1,206 @@
+[MAIN]
+
+# Pickle collected data for later comparisons.
+persistent=no
+
+# Minimum Python version to use for version dependent checks. Will default to
+# the version used to run pylint.
+py-version=3.8
+
+# Discover python modules and packages in the file system subtree.
+recursive=yes
+
+# When enabled, pylint would attempt to guess common misconfiguration and emit
+# user-friendly hints instead of false-positive error messages.
+suggestion-mode=yes
+
+
+[BASIC]
+
+# Minimum line length for functions/classes that require docstrings, shorter
+# ones are exempt.
+docstring-min-length=-1
+
+# Bad variable names which should always be refused, separated by a comma.
+bad-names=foo,bar,abc,cba,xyz,zyx,foobar,hello,world
+
+# Good variable names which should always be accepted, separated by a comma.
+good-names=i,j,k,n,_,rx
+
+# Naming style matching correct argument names.
+argument-naming-style=snake_case
+
+# Naming style matching correct attribute names.
+attr-naming-style=snake_case
+
+# Naming style matching correct class attribute names.
+class-attribute-naming-style=any
+
+# Naming style matching correct class constant names.
+class-const-naming-style=UPPER_CASE
+
+# Naming style matching correct class names.
+class-naming-style=PascalCase
+
+# Naming style matching correct constant names.
+const-naming-style=UPPER_CASE
+
+# Naming style matching correct function names.
+function-naming-style=snake_case
+
+# Include a hint for the correct naming format with invalid-name.
+include-naming-hint=yes
+
+# Naming style matching correct inline iteration names.
+inlinevar-naming-style=any
+
+# Naming style matching correct method names.
+method-naming-style=snake_case
+
+# Naming style matching correct module names.
+module-naming-style=snake_case
+
+# Naming style matching correct variable names.
+variable-naming-style=snake_case
+
+
+[DESIGN]
+
+# Maximum number of arguments for function / method.
+max-args=10
+
+# Maximum number of attributes for a class (see R0902).
+max-attributes=7
+
+# Maximum number of boolean expressions in an if statement (see R0916).
+max-bool-expr=5
+
+# Maximum number of branch for function / method body.
+max-branches=20
+
+# Maximum number of locals for function / method body.
+max-locals=20
+
+# Maximum number of parents for a class (see R0901).
+max-parents=7
+
+# Maximum number of public methods for a class (see R0904).
+max-public-methods=20
+
+# Maximum number of return / yield for function / method body.
+max-returns=15
+
+# Maximum number of statements in function / method body.
+max-statements=100
+
+# Minimum number of public methods for a class (see R0903).
+min-public-methods=1
+
+
+[FORMAT]
+
+# Expected format of line ending, e.g. empty (any line ending), LF or CRLF.
+expected-line-ending-format=
+
+# Regexp for a line that is allowed to be longer than the limit.
+ignore-long-lines=^\s*(# )?<?https?://\S+>?$
+
+# Number of spaces of indent required inside a hanging or continued line.
+indent-after-paren=4
+
+# String used as indentation unit. This is usually "    " (4 spaces) or "\t" (1
+# tab).
+indent-string='    '
+
+# Maximum number of characters on a single line.
+max-line-length=120
+
+# Maximum number of lines in a module.
+max-module-lines=1000
+
+# Allow the body of a class to be on the same line as the declaration if body
+# contains single statement.
+single-line-class-stmt=no
+
+# Allow the body of an if to be on the same line as the test if there is no
+# else.
+single-line-if-stmt=no
+
+
+[IMPORTS]
+
+# List of modules that can be imported at any level, not just the top level
+# one.
+allow-any-import-level=
+
+# Allow wildcard imports from modules that define __all__.
+allow-wildcard-with-all=no
+
+
+[LOGGING]
+
+# The type of string formatting that logging methods do. `old` means using %
+# formatting, `new` is for `{}` formatting.
+logging-format-style=old
+
+
+[MESSAGES CONTROL]
+
+# disable similarities check
+disable=raw-checker-failed,
+        bad-inline-option,
+        locally-disabled,
+        file-ignored,
+        suppressed-message,
+        useless-suppression,
+        deprecated-pragma,
+        use-symbolic-message-instead,
+        duplicate-code
+
+
+[MISCELLANEOUS]
+
+# List of note tags to take in consideration, separated by a comma.
+notes=FIXME,TODO
+
+
+
+[REPORTS]
+
+# Tells whether to display a full report or only the messages.
+reports=yes
+
+# Activate the evaluation score.
+score=yes
+
+
+[SIMILARITIES]
+
+# Minimum lines number of a similarity.
+min-similarity-lines=5
+
+
+[STRING]
+
+# This flag controls whether inconsistent-quotes generates a warning when the
+# character used as a quote delimiter is used inconsistently within a module.
+check-quote-consistency=yes
+
+
+[TYPECHECK]
+
+# Tells whether to warn about missing members when the owner of the attribute
+# is inferred to be None.
+ignore-none=no
+
+
+[VARIABLES]
+
+# List of strings which can identify a callback function by name. A callback
+# name must start or end with one of those strings.
+callbacks=clbk,callback
+
+
+
+
+# Disable: R1735 (use-dict-literal)
