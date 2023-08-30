@@ -1,5 +1,21 @@
-data
+
+# build files
 faces.egg-info
+
+# python files
 __pycache__
 *.pyc
+
+# virtual environments
 env
+.env
+.venv
+venv
+
+# documentation builds
+docs/build
+
+# data files
+data
+
+
