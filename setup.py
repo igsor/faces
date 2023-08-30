@@ -5,14 +5,14 @@ import os
 setup(
     # package metadata
     name='faces',
-    version='0.23.07',
+    version='0.23.08',
     author='Matthias Baumgartner',
     author_email='dev@igsor.net',
-    description='An example face detection and person identification pipeline.',
+    description='Face detection, extraction, and identification. An example.',
     long_description=open(os.path.join(os.path.dirname(__file__), 'README.md')).read(),
     license='BSD',
     license_files=('LICENSE', ),
-    url='https://www.linux-friends.net/faces/',
+    url='https://www.igsor.net/faces/',
 
     # packages
     packages=find_packages(include=['faces']),
@@ -23,7 +23,7 @@ setup(
     # entrypoints
     entry_points={
         'console_scripts': [
-            'bsfs = faces:main',
+            'faces= faces.main:main',
             ],
         },
 
@@ -31,14 +31,18 @@ setup(
     python_requires=">=3.7",
     install_requires=(
         'facenet_pytorch',
-        'ipykernel',
-        'matplotlib',
-        'nbformat>=4.2.0',
         'numpy',
-        'pandas',
         'pillow',
-        'plotly',
-        'scikit-learn',
         'torch',
         ),
+    extras_require={
+        'dev': [
+            'build',
+            'coverage',
+            'furo',
+            'mypy',
+            'pylint',
+            'sphinx',
+            ],
+        },
 )
