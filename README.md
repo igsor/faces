@@ -33,7 +33,7 @@ To run only the tests (without coverage), run the following command from the **t
 
     $ python -m unittest
 
-To build the documentation, run the following commands from the **doc folder**:
+To build the documentation, run the following commands from the **docs folder**:
 
     $ sphinx-apidoc -f -o source/api ../faces/ --module-first -d 1 --separate
     $ make html
