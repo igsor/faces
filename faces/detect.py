@@ -76,12 +76,12 @@ class Detect:
             ) -> typing.Iterator[utils.Face]:
         """Return the face for each bounding box."""
         for patch in self._mtcnn.extract(img, np.array([box.as_tuple for box in boxes]), None):
-            yield Face(bounding_box=box, patch=patch)
+            yield utils.Face(bounding_box=box, patch=patch)
 
     def from_image(
             self,
             img: Image.Image,
-            ) -> typing.Iterator[Face]:
+            ) -> typing.Iterator[utils.Face]:
         """Return the faces in *img."""
         # preprocess the image
         #img = utils.preprocess(img, self._target_size)
@@ -91,7 +91,7 @@ class Detect:
     def from_path(
             self,
             path: Path,
-            ) -> typing.Iterator[Face]:
+            ) -> typing.Iterator[utils.Face]:
         """Return the faces for the image file at *path*."""
         return self.from_image(Image.open(path))
 

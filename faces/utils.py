@@ -109,7 +109,7 @@ def preprocess(
 
 def annotate(
         img: Image.Image,
-        boxes: frozenset[BoundingBox],
+        boxes: typing.Iterable[BoundingBox],
         line_width: int = 6,
         show_text: bool = True,
         box_color: Color = Color(255, 0, 0),
@@ -133,8 +133,8 @@ def annotate(
     draw = ImageDraw.Draw(img)
     for box in boxes:
         draw.rectangle(
-            box.as_tuple(),
-            outline=box_color.as_tuple(),
+            box.as_tuple,
+            outline=box_color.as_tuple,
             width=line_width,
             )
         if show_text and box.label is not None:
@@ -152,7 +152,7 @@ def annotate(
                     xy,
                     text=label,
                     font=FONT,
-                    fill=font_color.as_tuple(),
+                    fill=font_color.as_tuple,
                     )
 
     return img
