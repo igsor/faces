@@ -6,3 +6,5 @@ Faces: detection, extraction, and identification. An example.
    :maxdepth: 2
    :caption: Contents:
 
+   api/modules
+

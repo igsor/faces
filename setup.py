@@ -45,7 +45,7 @@ setup(
             'isort',
             'mypy',
             'pylint',
-            'sphinx',
+            'sphinx<7.2.0',
             ],
         },
 )

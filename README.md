@@ -9,6 +9,8 @@ Set up a virtual environment:
     $ virtualenv env
     $ source env/bin/activate
 
+# NOTE: install torch according to https://pytorch.org before continuing!
+
 Install faces as editable from the git repository:
 
     $ git clone https://github.com/igsor/faces
@@ -21,6 +23,8 @@ If you want to develop (*dev*) faces with the respective extras:
 
 To ensure code style discipline, run the following commands:
 
+    $ isort faces
+    $ black faces
     $ coverage run ; coverage html ; xdg-open .htmlcov/index.html
     $ pylint faces
     $ mypy
