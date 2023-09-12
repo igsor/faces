@@ -155,7 +155,8 @@ disable=raw-checker-failed,
         useless-suppression,
         deprecated-pragma,
         use-symbolic-message-instead,
-        duplicate-code
+        duplicate-code,
+        missing-module-docstring
 
 
 [MISCELLANEOUS]
@@ -168,7 +169,7 @@ notes=FIXME,TODO
 [REPORTS]
 
 # Tells whether to display a full report or only the messages.
-reports=yes
+reports=no
 
 # Activate the evaluation score.
 score=yes
@@ -188,6 +189,7 @@ check-quote-consistency=yes
 
 
 [TYPECHECK]
+generated-members=torch.*
 
 # Tells whether to warn about missing members when the owner of the attribute
 # is inferred to be None.

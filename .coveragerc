@@ -8,6 +8,7 @@ command_line = -m unittest
 [report]
 show_missing = True
 skip_empty = True
+omit = __init__.py
 
 [html]
 directory = .htmlcov

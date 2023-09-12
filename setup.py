@@ -31,15 +31,18 @@ setup(
     python_requires=">=3.7",
     install_requires=(
         'facenet_pytorch',
+        'matplotlib',
         'numpy',
         'pillow',
         'torch',
         ),
     extras_require={
         'dev': [
+            'black',
             'build',
             'coverage',
             'furo',
+            'isort',
             'mypy',
             'pylint',
             'sphinx',

@@ -14,6 +14,7 @@ venv
 
 # documentation builds
 docs/build
+.coverage
 
 # data files
 data
