@@ -47,5 +47,14 @@ setup(
             'pylint',
             'sphinx<7.2.0',
             ],
+        'notebook': [
+            'ipykernel',
+            'ipywidgets',
+            'pandas',
+            'plotly-express',
+            'scikit-learn',
+            'tqdm',
+            'nbformat>=4.2.0',
+            ],
         },
 )

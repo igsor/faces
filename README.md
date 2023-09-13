@@ -55,7 +55,15 @@ Install faces as editable from the git repository:
     $ cd faces
     $ pip install -e .
 
-If you want to develop (*dev*) faces with the respective extras:
+If you want to tune the detection and identification sensitivity in the notebooks, install faces with the respective extras:
+
+    $ pip install -e ".[notebook]"
+
+**NOTE**: (optional) install ipython kernel with the following command
+
+    $ python -m ipykernel install --user --name faces --display-name "Faces"
+
+If you want to develop (*dev*), install faces with the respective extras:
 
     $ pip install -e ".[dev]"
 
