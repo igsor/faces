@@ -147,6 +147,76 @@ Which threshold is best depends on your specific scenario.
 Check out the [face detection tuning notebook](https://github.com/igsor/faces/blob/main/notebooks/detect.ipynb) for more details and instructions on how to tune the sensitivity to your dataset.
 
 
+## Face identification
+
+Face identification builds on top of face detection.
+We again use FaceNet [^1] in this stage, but have to build some more logic around
+it to make it usable.
+Specifically, you'll need to build a database that contains reference face images
+and who they're depicting.
+
+Use the following command to do so for the an example image.
+Note that you'll need to run this command no matter whether you continue with
+the command-line or python shell.
+```bash
+faces register data/douglas_adams.jpg
+```
+
+This command detects Douglas Adams' face and adds it to the database (stored in `~/.faces.pkl` by default).
+You don't have to supply the name, because we infer it from the filename in this case
+(run `import faces.main ; help(faces.main.Main.register)`
+in a python shell to find out how this process works exactly).
+
+You can repeat the command on more images to add more people to your database.
+In fact, you must do so for all people that you want to be able to identify.
+You can (and should, if possible) do this repeatedly with multiple images of the same person,
+so that you have multiple reference images for one person,
+which increases the likelihood that you will successfully identify them!
+
+From now on, you can identify Douglas Adams in images.
+Try this on the command-line:
+```bash
+faces identify data/who-is-this.jpg
+```
+
+Alternatively, you can achieve the same with some lines of python code:
+```python
+# import 
+from pathlib import Path
+from faces import Image
+from faces.builder import DefaultBuilder
+from faces.main import Main
+
+# initialize pipeline
+builder = DefaultBuilder.from_defaults()
+
+# open an image
+image = Image.open(Path('data/who-is-this.jpg'))
+
+# identify using the built-in function
+Main().identify(builder, image).show()
+
+# or do the same by calling the detector and identifier directly
+builder.annotate.with_identity(image, (
+    (box, builder.identifier(patch))
+    for box, patch in builder.detector.extract(image))).show()
+```
+
+Same as with face detection,
+you can also tune the sensitivity of the face identification.
+An identifier with low sensitivity will only select references from the database
+if they are extremely similar to your query image.
+Conversely, it will reject any image for which you don't have a good enough reference
+(it will label the face with "Anonymous" instead of the actual name),
+even though you might have the person in your database.
+A highly sensitive identifier will try hard to find a reference in the database.
+But it will sometimes try too hard and match references of your database that depict
+a completely different person than the one in your query image.
+
+So, you're again faced with this trade-off,
+and only you can decide what the correct cut-off value is.
+To do so, have a look at the [face identification tuning notebook](https://github.com/igsor/faces/blob/main/notebooks/identify.ipynb).
+
 
 ## References
 
