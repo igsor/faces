@@ -1,5 +1,6 @@
 
-# Faces - An example face detection and identification module
+# Faces
+An educational face detection and identification module
 
 ## Introduction
 
@@ -15,7 +16,7 @@ The idea is that we can compare the query face to all example images from that d
 and use the name associated with the closest match.
 
 The module is intended as an educational demonstration of face identification.
-The heavy lifting is done by FaceNet [^1]. 
+The heavy lifting is done by FaceNet [^1].
 Specifically, this module is built on the [pytorch](https://pytorch.org) implementation of FaceNet [^2].
 FaceNet comes with two components.
 The first component can detect faces in an image (i.e., the first step of our pipeline).
@@ -103,7 +104,7 @@ faces detect data/douglas_adams.jpg
 
 Or, you can use the following template to do the same in python code:
 ```python
-# import 
+# import
 from pathlib import Path
 from faces import Image
 from faces.builder import DefaultBuilder
@@ -181,7 +182,7 @@ faces identify data/who-is-this.jpg
 
 Alternatively, you can achieve the same with some lines of python code:
 ```python
-# import 
+# import
 from pathlib import Path
 from faces import Image
 from faces.builder import DefaultBuilder

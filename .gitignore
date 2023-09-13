@@ -15,6 +15,7 @@ venv
 # documentation builds
 docs/build
 .coverage
+.ipynb_checkpoints
 
 # data files
 data
