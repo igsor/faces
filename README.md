@@ -82,6 +82,63 @@ To build the documentation, run the following commands from the **docs folder**:
     $ xdg-open build/html/index.html
 
 
+## Face detection
+
+This module prepares the image, calls the necessary FaceNet functions,
+and returns the result in nicely wrapped data structures.
+See [detector.py](https://github.com/igsor/faces/blob/main/faces/detector.py) for details.
+
+You can use this functionality in just one simple command:
+```bash
+faces detect data/douglas_adams.jpg
+```
+
+Or, you can use the following template to do the same in python code:
+```python
+# import 
+from pathlib import Path
+from faces import Image
+from faces.builder import DefaultBuilder
+from faces.main import Main
+
+# initialize pipeline
+builder = DefaultBuilder.from_defaults()
+
+# open an image
+image = Image.open(Path('data/douglas_adams.jpg'))
+
+# detect using the built-in function
+Main().detect(builder, image).show()
+
+# or do the same by calling the detector directly
+builder.annotate(image, (box for box, _ in builder.detector.detect(image))).show()
+```
+
+You may have wondered why you can just execute the face detection without training.
+This is because FaceNet has already been trained on millions of images,
+so you don't need to do any training on your own dataset anymore.
+That's actually great, because building and maintaining such a large dataset is
+an elaborate and time-consuming effort,
+and the training itself also takes a long time even on powerful hardware.
+
+However, you can still tune its sensitivity to your own dataset.
+Despite being quite accurate, FaceNet still hallucinates faces in an image,
+i.e., it will present you locations where it believes to have found a face,
+even though you can clearly see that there is none.
+
+For each (potential) face that FaceNet detects, it will also specify how confident it is.
+By rejecting faces with a low confidence you will get fewer such hallucinations (false positives).
+Where exactly to set this confidence cut-off cannot be answered generally,
+because a higher threshold (i.e., require high confidence) will also
+make it miss more actual faces (false negatives).
+This is a natural sensitivity trade-off:
+High sensitivity leads to many face detections, including many wrong ones.
+Low sensitivity leads to few detections but also few wrong ones.
+Which threshold is best depends on your specific scenario.
+
+Check out the [face detection tuning notebook](https://github.com/igsor/faces/blob/main/notebooks/detect.ipynb) for more details and instructions on how to tune the sensitivity to your dataset.
+
+
 
 ## References
 
