@@ -4,8 +4,8 @@ from pathlib import Path
 
 import torch
 
-from faces import Annotate, Builder, Classifier, Detector, Encoder, Identity, Registry
-from faces.classifier import ConstrainedNearestNeighbourClassifier
+from faces import Annotate, Builder, Identifier, Detector, Encoder, Identity, Registry
+from faces.identifier import ConstrainedNearestNeighbourClassifier
 from faces.detector import MTCNNDetector
 from faces.drawing import PILAnnotate
 from faces.encoder import ResnetEncoder
@@ -38,7 +38,7 @@ class DefaultBuilder(Builder):
         return PILAnnotate()
 
     @property
-    def classifier(self) -> Classifier:
+    def identifier(self) -> Identifier:
         return ConstrainedNearestNeighbourClassifier.fit(
             samples=self.registry,
             distance_threshold=self.distance_threshold,

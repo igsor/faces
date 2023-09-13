@@ -126,7 +126,7 @@ class Main:
         return builder.annotate.with_identity(
             image,
             (
-                (bounding_box, builder.classifier(face_patch))
+                (bounding_box, builder.identifier(face_patch))
                 for bounding_box, face_patch in builder.detector.extract(image)
             ),
         )

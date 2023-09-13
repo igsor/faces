@@ -19,7 +19,7 @@ from faces.types import (
 )
 
 
-class Classifier(ABC):
+class Identifier(ABC):
     """Identify faces."""
 
     @abstractmethod
@@ -103,8 +103,8 @@ class Builder(ABC):
 
     @property
     @abstractmethod
-    def classifier(self) -> Classifier:
-        """Return a Classifier instance."""
+    def identifier(self) -> Identifier:
+        """Return a Identifier instance."""
 
     @property
     @abstractmethod

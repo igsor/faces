@@ -5,7 +5,7 @@ from dataclasses import dataclass
 
 import torch
 
-from faces import Classifier, Encoder, FaceEncoding, FacePatch, Identity
+from faces import Identifier, Encoder, FaceEncoding, FacePatch, Identity
 
 
 @dataclass(frozen=True)
@@ -43,7 +43,7 @@ class _NearestNeighbour:
 
 
 @dataclass(frozen=True)
-class ConstrainedNearestNeighbourClassifier(Classifier):
+class ConstrainedNearestNeighbourClassifier(Identifier):
     """Open-world nearest neighbour classifier.
     Uses a distance threshold on the nearest neighbour to
     discard samples that do not match any reference point.
@@ -69,8 +69,8 @@ class ConstrainedNearestNeighbourClassifier(Classifier):
         encoder: Encoder,
         distance_threshold: float = 1.0,
         restklasse: Identity = Identity("Anonymous"),
-    ) -> Classifier:
-        """Return a classifier that is fitted to *samples*."""
+    ) -> Identifier:
+        """Return an identifier that is fitted to *samples*."""
         # filter
         valid_samples = (
             (patch, label) for patch, label in samples if label != restklasse
