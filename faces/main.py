@@ -148,7 +148,10 @@ class Main:
                 for _, face_patch in builder.detector.extract(Image.open(path))
             ]
             if len(patches) == 1:
-                builder.registry.add(patches[0], _path_to_identity(label))
+                try:
+                    builder.registry.add(patches[0], _path_to_identity(label))
+                except ValueError as error:
+                    print("Skipping face:", error)
             elif len(patches) > 1:
                 for face_patch in patches:
                     user_input = ""
@@ -177,7 +180,10 @@ class Main:
                         if user_input == "-3":
                             sys.exit(1)
                     if user_input:
-                        builder.registry.add(face_patch, Identity(user_input))
+                        try:
+                            builder.registry.add(face_patch, Identity(user_input))
+                        except ValueError as error:
+                            print("Skipping face:", error)
 
         if path.is_file():
             _add_face(path, path)

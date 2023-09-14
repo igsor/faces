@@ -58,6 +58,14 @@ class PickleRegistry(Registry):
             )
 
     def add(self, face_patch: FacePatch, identity: Identity) -> None:
+        # NOTE: tensor hashes differ even if they are have identical values
+        if knows_patch_as := {
+            identity for patch, identity in self.data if torch.equal(face_patch, patch)
+        }:
+            if knows_patch_as != {identity}:
+                raise ValueError(f"already known as {knows_patch_as}")
+            return
+
         self.data.add((face_patch, identity))
         self._save()
 
