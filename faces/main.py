@@ -93,23 +93,20 @@ class Main:
         builder = DefaultBuilder.from_args(args)
 
         # take action
-        match args.action:
-            case "detect":
-                detect = (
-                    self.detect_with_probability
-                    if args.show_probability
-                    else self.detect
-                )
-                for path in args.images:
-                    detect(builder, Image.open(path)).show()
-            case "identify":
-                for path in args.images:
-                    self.identify(builder, Image.open(path)).show()
-            case "register":
-                for path in args.images:
-                    self.register(builder, path)
-            case _:
-                raise ValueError(args.action)
+        if args.action == "detect":
+            detect = (
+                self.detect_with_probability if args.show_probability else self.detect
+            )
+            for path in args.images:
+                detect(builder, Image.open(path)).show()
+        elif args.action == "identify":
+            for path in args.images:
+                self.identify(builder, Image.open(path)).show()
+        elif args.action == "register":
+            for path in args.images:
+                self.register(builder, path)
+        else:
+            raise ValueError(args.action)
 
     def detect(self, builder: Builder, image: Image) -> PILImage.Image:
         """Return an image where detected faces are highlighted."""
