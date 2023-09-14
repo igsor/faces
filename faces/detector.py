@@ -14,6 +14,8 @@ class MTCNNDetector(Detector):
 
     model: MTCNN
 
+    device: torch.device
+
     def __init__(
         self,
         # torch device.
@@ -29,6 +31,7 @@ class MTCNNDetector(Detector):
         # size of the extracted patch.
         patch_size: int = 160,
     ):
+        self.device = device
         self.probability_threshold = probability_threshold
         # initialize the face detection network
         self.model = MTCNN(
@@ -52,4 +55,4 @@ class MTCNNDetector(Detector):
         for box, _ in self.detect(image):
             yield box, self.model.extract(
                 image.image, np.array(box.as_tuple).reshape(1, -1), None
-            ).squeeze(0)
+            ).squeeze(0).to(self.device)

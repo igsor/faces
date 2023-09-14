@@ -153,7 +153,12 @@ class Main:
                 for face_patch in patches:
                     user_input = ""
                     while not user_input:
-                        plt.imshow((face_patch.permute(1, 2, 0) * 128 + 128) / 256.0)
+                        plt.imshow(
+                            ((face_patch.permute(1, 2, 0) * 128 + 128) / 256.0)
+                            .detach()
+                            .cpu()
+                            .numpy()
+                        )
                         plt.show()
                         print(
                             "Please specify the identity of the previously shown face."

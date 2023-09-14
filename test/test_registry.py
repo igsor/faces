@@ -63,19 +63,20 @@ class TestPickleRegistry(unittest.TestCase):
 
     def test_open(self) -> None:
         # open new registry
-        registry = PickleRegistry.open(self.registry_path)
+        registry = PickleRegistry.open(self.registry_path, device=torch.device("cpu"))
         self.assertIsInstance(registry, PickleRegistry)
         self.assertEqual(len(registry.data), 0)
         # open non-empty registry
         registry = PickleRegistry.open(
-            Path(__file__).parent / "data" / "registry" / "faces.pkl"
+            Path(__file__).parent / "data" / "registry" / "faces.pkl",
+            device=torch.device("cpu"),
         )
         self.assertEqual(len(registry.data), 4)
 
     def _initialize_registry(
         self,
     ) -> Tuple[PickleRegistry, Iterable[Identity], Iterable[FacePatch]]:
-        registry = PickleRegistry.open(self.registry_path)
+        registry = PickleRegistry.open(self.registry_path, device=torch.device("cpu"))
 
         queries = (
             "eric-idle.npy",
@@ -101,7 +102,7 @@ class TestPickleRegistry(unittest.TestCase):
         self.assertEqual(len(registry.data), 6)
         self.assertSetEqual(set(registry.data), set(zip(patches, queries)))
         # registry has been saved
-        reloaded = PickleRegistry.open(self.registry_path)
+        reloaded = PickleRegistry.open(self.registry_path, device=torch.device("cpu"))
         self.assertEqual(len(registry.data), 6)
         self.assertSetEqual(set(registry.data), set(zip(patches, queries)))
 
@@ -111,16 +112,20 @@ class TestPickleRegistry(unittest.TestCase):
         self.assertSetEqual(set(registry), set(zip(patches, queries)))
         # loaded registry
         registry = PickleRegistry.open(
-            Path(__file__).parent / "data" / "registry" / "faces.pkl"
+            Path(__file__).parent / "data" / "registry" / "faces.pkl",
+            device=torch.device("cpu"),
         )
         self.assertEqual(len(registry), 4)
 
     def test_len(self) -> None:
         # new registry
-        self.assertEqual(len(PickleRegistry.open(self.registry_path)), 0)
+        self.assertEqual(
+            len(PickleRegistry.open(self.registry_path, device=torch.device("cpu"))), 0
+        )
         # loaded registry
         registry = PickleRegistry.open(
-            Path(__file__).parent / "data" / "registry" / "faces.pkl"
+            Path(__file__).parent / "data" / "registry" / "faces.pkl",
+            device=torch.device("cpu"),
         )
         self.assertEqual(len(registry), 4)
 

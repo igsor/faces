@@ -65,7 +65,7 @@ class DefaultBuilder(Builder):
 
     @property
     def registry(self) -> Registry:
-        return PickleRegistry.open(self.registry_path)
+        return PickleRegistry.open(self.registry_path, self.device)
 
     @classmethod
     def from_args(cls, args) -> Builder:

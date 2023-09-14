@@ -13,7 +13,7 @@ class ResnetEncoder(Encoder):
         self,
         device: torch.device,
     ):
-        self.model = InceptionResnetV1("vggface2").eval().to(device)
+        self.model = InceptionResnetV1("vggface2", device=device).eval()
 
     def __call__(self, face_patch: FacePatch) -> FaceEncoding:
         # pylint: disable=not-callable

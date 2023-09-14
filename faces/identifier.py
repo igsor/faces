@@ -95,7 +95,10 @@ class ConstrainedNearestNeighbourClassifier(Identifier):
         # classifier
         classifier = _NearestNeighbour(
             encodings=encoder.many(torch.stack(patches)),
-            targets=torch.Tensor([identity2index[label] for label in labels]),
+            # NOTE: targets can be on the cpu no matter the encodings
+            targets=torch.tensor(
+                [identity2index[label] for label in labels], device=torch.device("cpu")
+            ),
         )
         return cls(
             encoder=encoder,

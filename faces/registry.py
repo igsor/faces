@@ -35,12 +35,18 @@ class PickleRegistry(Registry):
     data: Set[Tuple[FacePatch, Identity]]
 
     @classmethod
-    def open(cls, path: Path) -> Registry:
+    def open(cls, path: Path, device: torch.device) -> Registry:
         """Open the registry at *path*."""
         if not path.exists():
             return cls(path=path, data=set())
         with open(path, "rb") as registry_file:
-            return cls(path=path, data=pickle.load(registry_file)["data"])
+            return cls(
+                path=path,
+                data={
+                    (patch.to(device), identity)
+                    for patch, identity in pickle.load(registry_file)["data"]
+                },
+            )
 
     def _save(self) -> None:
         with open(self.path, "wb") as registry_file:
