@@ -1,8 +1,9 @@
 import pickle
-from collections.abc import Iterator
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Set
+from typing import Iterator, Set, Tuple
+
+import torch
 
 from faces import FacePatch, Identity, Registry
 
@@ -10,7 +11,7 @@ from faces import FacePatch, Identity, Registry
 class InMemoryRegistry(Registry):
     """Store faces in volatile memory."""
 
-    data: Set[tuple[FacePatch, Identity]]
+    data: Set[Tuple[FacePatch, Identity]]
 
     def __init__(self):
         self.data = set()
@@ -18,7 +19,7 @@ class InMemoryRegistry(Registry):
     def add(self, face_patch: FacePatch, identity: Identity) -> None:
         self.data.add((face_patch, identity))
 
-    def __iter__(self) -> Iterator[tuple[FacePatch, Identity]]:
+    def __iter__(self) -> Iterator[Tuple[FacePatch, Identity]]:
         return iter(self.data)
 
     def __len__(self) -> int:
@@ -31,7 +32,7 @@ class PickleRegistry(Registry):
 
     path: Path
 
-    data: Set[tuple[FacePatch, Identity]]
+    data: Set[Tuple[FacePatch, Identity]]
 
     @classmethod
     def open(cls, path: Path) -> Registry:
@@ -54,7 +55,7 @@ class PickleRegistry(Registry):
         self.data.add((face_patch, identity))
         self._save()
 
-    def __iter__(self) -> Iterator[tuple[FacePatch, Identity]]:
+    def __iter__(self) -> Iterator[Tuple[FacePatch, Identity]]:
         return iter(self.data)
 
     def __len__(self) -> int:

@@ -2,10 +2,11 @@ from __future__ import annotations
 
 from collections.abc import Iterable, Mapping
 from dataclasses import dataclass
+from typing import Tuple
 
 import torch
 
-from faces import Identifier, Encoder, FaceEncoding, FacePatch, Identity
+from faces import Encoder, FaceEncoding, FacePatch, Identifier, Identity
 
 
 @dataclass(frozen=True)
@@ -19,7 +20,7 @@ class _NearestNeighbour:
     def __post_init__(self) -> None:
         assert len(self.encodings) == len(self.targets)
 
-    def __call__(self, encoding: FaceEncoding) -> tuple[int, float]:
+    def __call__(self, encoding: FaceEncoding) -> Tuple[int, float]:
         """Return the nearest neighbour and its distance to *encoding*."""
         # pairwise distances
         dist = torch.cdist(encoding.unsqueeze(0), self.encodings).squeeze(0)
@@ -64,7 +65,7 @@ class ConstrainedNearestNeighbourClassifier(Identifier):
     @classmethod
     def fit(
         cls,
-        samples: Iterable[tuple[FacePatch, Identity]],
+        samples: Iterable[Tuple[FacePatch, Identity]],
         *,
         encoder: Encoder,
         distance_threshold: float = 1.0,
@@ -104,7 +105,7 @@ class ConstrainedNearestNeighbourClassifier(Identifier):
             classifier=classifier,
         )
 
-    def nearest_neighbour(self, face_patch: FacePatch) -> tuple[Identity, float]:
+    def nearest_neighbour(self, face_patch: FacePatch) -> Tuple[Identity, float]:
         """Return the nearest neighbour and its distance."""
         if self.classifier.is_empty:
             return self.restklasse, float("inf")

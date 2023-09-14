@@ -6,8 +6,8 @@ import numpy as np
 import torch
 
 from faces import FacePatch, Identity
-from faces.identifier import ConstrainedNearestNeighbourClassifier
 from faces.encoder import ResnetEncoder
+from faces.identifier import ConstrainedNearestNeighbourClassifier
 
 
 class TestIdentifier(unittest.TestCase):

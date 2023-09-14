@@ -1,14 +1,15 @@
 from dataclasses import dataclass
 from functools import cached_property
 from pathlib import Path
+from typing import Tuple
 
 import torch
 
-from faces import Annotate, Builder, Identifier, Detector, Encoder, Identity, Registry
-from faces.identifier import ConstrainedNearestNeighbourClassifier
+from faces import Annotate, Builder, Detector, Encoder, Identifier, Identity, Registry
 from faces.detector import MTCNNDetector
 from faces.drawing import PILAnnotate
 from faces.encoder import ResnetEncoder
+from faces.identifier import ConstrainedNearestNeighbourClassifier
 from faces.registry import PickleRegistry
 
 
@@ -29,7 +30,7 @@ class DefaultBuilder(Builder):
 
     min_face_size: int = 20
 
-    thresholds: tuple[float, float, float] = (0.6, 0.7, 0.7)
+    thresholds: Tuple[float, float, float] = (0.6, 0.7, 0.7)
 
     factor: float = 0.709
 

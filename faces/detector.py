@@ -1,4 +1,4 @@
-from collections.abc import Iterable, Iterator
+from typing import Iterable, Iterator, Tuple
 
 import numpy as np
 import torch
@@ -23,7 +23,7 @@ class MTCNNDetector(Detector):
         # minimum face size. Smaller values will detect more possible faces.
         min_face_size: int = 20,
         # internal probability thresholds. Decrease values to increase the sensitivity.
-        thresholds: tuple[float, float, float] = (0.6, 0.7, 0.7),
+        thresholds: Tuple[float, float, float] = (0.6, 0.7, 0.7),
         # pyramid scaling factor.
         factor: float = 0.709,
         # size of the extracted patch.
@@ -40,7 +40,7 @@ class MTCNNDetector(Detector):
             image_size=patch_size,
         )
 
-    def detect(self, image: Image) -> Iterable[tuple[BoundingBox, FaceProbability]]:
+    def detect(self, image: Image) -> Iterable[Tuple[BoundingBox, FaceProbability]]:
         boxes, probs = self.model.detect(image.image)
         if boxes is None:  # no boxes to return
             return
@@ -48,7 +48,7 @@ class MTCNNDetector(Detector):
             if prob >= self.probability_threshold:
                 yield BoundingBox(*box), prob
 
-    def extract(self, image: Image) -> Iterator[tuple[BoundingBox, FacePatch]]:
+    def extract(self, image: Image) -> Iterator[Tuple[BoundingBox, FacePatch]]:
         for box, _ in self.detect(image):
             yield box, self.model.extract(
                 image.image, np.array(box.as_tuple).reshape(1, -1), None

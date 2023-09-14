@@ -4,7 +4,7 @@ import argparse
 from abc import ABC, abstractmethod
 from collections.abc import Iterable, Iterator
 from pathlib import Path
-from typing import Any
+from typing import Any, Tuple
 
 import torch
 from PIL import Image as PILImage
@@ -31,11 +31,11 @@ class Detector(ABC):
     """Detect faces."""
 
     @abstractmethod
-    def detect(self, image: Image) -> Iterable[tuple[BoundingBox, FaceProbability]]:
+    def detect(self, image: Image) -> Iterable[Tuple[BoundingBox, FaceProbability]]:
         """Return the bounding boxes and likelihoods of there being a face."""
 
     @abstractmethod
-    def extract(self, image: Image) -> Iterable[tuple[BoundingBox, FacePatch]]:
+    def extract(self, image: Image) -> Iterable[Tuple[BoundingBox, FacePatch]]:
         """Return the bounding boxes and faces detected in an image."""
 
 
@@ -59,7 +59,7 @@ class Registry(ABC):
         """Store a face and its identity. Auto-commits."""
 
     @abstractmethod
-    def __iter__(self) -> Iterator[tuple[FacePatch, Identity]]:
+    def __iter__(self) -> Iterator[Tuple[FacePatch, Identity]]:
         """Iterate over face patches and their identities."""
 
 
@@ -70,7 +70,7 @@ class Annotate(ABC):
     def with_probability(
         self,
         image: Image,
-        boxes_and_probability: Iterable[tuple[BoundingBox, FaceProbability]],
+        boxes_and_probability: Iterable[Tuple[BoundingBox, FaceProbability]],
     ) -> PILImage.Image:
         """Draw bounding boxes and their likelihood of enclosing a face."""
 
@@ -78,7 +78,7 @@ class Annotate(ABC):
     def with_identity(
         self,
         image: Image,
-        boxes_and_identity: Iterable[tuple[BoundingBox, Identity]],
+        boxes_and_identity: Iterable[Tuple[BoundingBox, Identity]],
     ) -> PILImage.Image:
         """Draw bounding boxes and their identity."""
 

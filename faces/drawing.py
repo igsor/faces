@@ -1,5 +1,5 @@
-from collections.abc import Iterable
 from dataclasses import dataclass
+from typing import Iterable, Tuple
 
 from PIL import Image as PILImage
 from PIL import ImageDraw, ImageFont
@@ -27,7 +27,7 @@ class Color:
         assert 0 <= self.alpha <= 255
 
     @property
-    def as_tuple(self) -> tuple[int, int, int, int]:
+    def as_tuple(self) -> Tuple[int, int, int, int]:
         """Return the color as (red, green, blue, alpha)-tuple."""
         return self.red, self.green, self.blue, self.alpha
 
@@ -43,7 +43,7 @@ class PILAnnotate(Annotate):
     def with_probability(
         self,
         image: Image,
-        boxes_and_probability: Iterable[tuple[BoundingBox, FaceProbability]],
+        boxes_and_probability: Iterable[Tuple[BoundingBox, FaceProbability]],
     ) -> PILImage.Image:
         return self._annotate(
             image, ((box, f"{prob:0.5f}") for box, prob in boxes_and_probability)
@@ -52,7 +52,7 @@ class PILAnnotate(Annotate):
     def with_identity(
         self,
         image: Image,
-        boxes_and_identity: Iterable[tuple[BoundingBox, Identity]],
+        boxes_and_identity: Iterable[Tuple[BoundingBox, Identity]],
     ) -> PILImage.Image:
         return self._annotate(image, boxes_and_identity)
 
@@ -70,7 +70,7 @@ class PILAnnotate(Annotate):
     def _annotate(
         self,
         image: Image,
-        boxes_and_labels: Iterable[tuple[BoundingBox, str]],
+        boxes_and_labels: Iterable[Tuple[BoundingBox, str]],
     ) -> PILImage.Image:
         """Draw bounding boxes and their labels into a copy of *img*. Return the new image.
 

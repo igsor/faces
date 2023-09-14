@@ -1,9 +1,10 @@
 import unittest
-from collections.abc import Iterable
 from pathlib import Path
 from tempfile import mkstemp
+from typing import Iterable, Tuple
 
 import numpy as np
+import torch
 
 from faces import FacePatch, Identity
 from faces.registry import InMemoryRegistry, PickleRegistry
@@ -12,7 +13,7 @@ from faces.registry import InMemoryRegistry, PickleRegistry
 class TestInMemoryRegistry(unittest.TestCase):
     def _initialize_registry(
         self,
-    ) -> tuple[InMemoryRegistry, Iterable[Identity], Iterable[FacePatch]]:
+    ) -> Tuple[InMemoryRegistry, Iterable[Identity], Iterable[FacePatch]]:
         registry = InMemoryRegistry()
 
         queries = (
@@ -73,7 +74,7 @@ class TestPickleRegistry(unittest.TestCase):
 
     def _initialize_registry(
         self,
-    ) -> tuple[PickleRegistry, Iterable[Identity], Iterable[FacePatch]]:
+    ) -> Tuple[PickleRegistry, Iterable[Identity], Iterable[FacePatch]]:
         registry = PickleRegistry.open(self.registry_path)
 
         queries = (

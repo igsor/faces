@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Optional
+from typing import Optional, Tuple
 
 import torch
 from PIL import Image as PILImage
@@ -37,7 +37,7 @@ class BoundingBox:
         ), "lower_top must be smaller than upper_top"
 
     @property
-    def as_tuple(self) -> tuple[float, float, float, float]:
+    def as_tuple(self) -> Tuple[float, float, float, float]:
         """Return the bounding box as (lower_left, lower_top, upper_left, upper_top)-tuple."""
         return (self.lower_left, self.lower_top, self.upper_left, self.upper_top)
 
