@@ -1,7 +1,7 @@
-faces.classifier module
+faces.identifier module
 =======================
 
-.. automodule:: faces.classifier
+.. automodule:: faces.identifier
    :members:
    :undoc-members:
    :show-inheritance:

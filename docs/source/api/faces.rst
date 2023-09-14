@@ -13,10 +13,10 @@ Submodules
    :maxdepth: 1
 
    faces.builder
-   faces.classifier
    faces.detector
    faces.drawing
    faces.encoder
+   faces.identifier
    faces.main
    faces.registry
    faces.types
