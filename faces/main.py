@@ -3,6 +3,7 @@
 import argparse
 import logging
 import sys
+from collections import Counter
 from pathlib import Path
 from typing import Optional
 
@@ -96,6 +97,8 @@ class Main:
             type=Path,
             help="images on which to apply face detection.",
         )
+        # dump
+        database_subparsers.add_parser("dump", help="dump face database")
         # remove
         register_parser = database_subparsers.add_parser(
             "remove", help="remove identities from the registry"
@@ -130,6 +133,8 @@ class Main:
             if args.dbaction == "add":
                 for path in args.images:
                     self.register(builder, path, args.identity)
+            elif args.dbaction == "dump":
+                self.dump(builder)
             elif args.dbaction == "remove":
                 for identity in args.identities:
                     self.remove(builder, identity)
@@ -157,6 +162,13 @@ class Main:
                 for bounding_box, face_patch in builder.detector.extract(image)
             ),
         )
+
+    def dump(self, builder: Builder) -> None:
+        """Print a summary of the registry's content."""
+        for identity, count in Counter(
+            [identity for patch, identity in builder.registry]
+        ).items():
+            print(f"{count: 4d}: {identity}")
 
     def remove(self, builder: Builder, identity: Identity) -> None:
         """Remove an identity (and all of its faces) from the registry."""

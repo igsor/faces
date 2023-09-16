@@ -1,5 +1,7 @@
 import shutil
 import unittest
+from contextlib import redirect_stdout
+from io import StringIO
 from pathlib import Path
 from tempfile import mkstemp
 
@@ -54,6 +56,20 @@ class TestMain(unittest.TestCase):
             Path(__file__).parent / "data" / "images" / "douglas_adams.jpg",
         )
         self.assertEqual(len(self.builder.registry), 5)
+
+    def test_dump(self) -> None:
+        buffer = StringIO()
+        with redirect_stdout(buffer):
+            Main().dump(self.builder)
+        self.assertSetEqual(
+            {line.strip() for line in buffer.getvalue().split("\n") if line.strip()},
+            {
+                "1: terry-jones.npy",
+                "1: michael-palin.npy",
+                "1: terry-gilliam.npy",
+                "1: john-cleese.npy",
+            },
+        )
 
     def test_remove(self) -> None:
         self.assertEqual(len(self.builder.registry), 4)
