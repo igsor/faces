@@ -3,6 +3,7 @@ from __future__ import annotations
 import argparse
 from abc import ABC, abstractmethod
 from collections.abc import Iterable, Iterator
+from functools import cached_property
 from pathlib import Path
 from typing import Any, Tuple
 
@@ -96,17 +97,22 @@ class Annotate(ABC):
 class Builder(ABC):
     """Build instances."""
 
-    @property
+    @cached_property
     @abstractmethod
     def annotate(self) -> Annotate:
         """Return an Annotate instance."""
 
-    @property
+    @cached_property
     @abstractmethod
     def identifier(self) -> Identifier:
         """Return a Identifier instance."""
 
-    @property
+    def reload(self) -> Builder:
+        """Reload the builder's persistent parts from disc."""
+        del self.identifier
+        return self
+
+    @cached_property
     @abstractmethod
     def encoder(self) -> Encoder:
         """Return an Encoder instance."""
@@ -116,7 +122,7 @@ class Builder(ABC):
     def registry(self) -> Registry:
         """Return a Registry instance."""
 
-    @property
+    @cached_property
     @abstractmethod
     def detector(self) -> Detector:
         """Return a Detector instance."""

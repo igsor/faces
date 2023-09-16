@@ -14,7 +14,7 @@ from faces.registry import PickleRegistry
 
 
 # pylint: disable=too-many-instance-attributes
-@dataclass(frozen=True)
+@dataclass
 class DefaultBuilder(Builder):
     """Build classes from default arguments."""
 
@@ -38,7 +38,7 @@ class DefaultBuilder(Builder):
     def annotate(self) -> Annotate:
         return PILAnnotate()
 
-    @property
+    @cached_property
     def identifier(self) -> Identifier:
         return ConstrainedNearestNeighbourClassifier.fit(
             samples=self.registry,
