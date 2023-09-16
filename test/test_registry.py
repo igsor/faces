@@ -119,6 +119,11 @@ class TestPickleRegistry(unittest.TestCase):
         # registry has been modified
         self.assertEqual(len(registry.data), 6)
         self.assertSetEqual(set(registry.data), set(zip(patches, queries)))
+        # double add raises
+        self.assertRaises(ValueError, registry.add, patches[0], "new name")
+        # double add skips
+        registry.add(patches[0], queries[0])
+        self.assertEqual(len(registry.data), 6)
         # registry has been saved
         reloaded = PickleRegistry.open(self.registry_path, device=torch.device("cpu"))
         self.assertEqual(len(registry.data), 6)
