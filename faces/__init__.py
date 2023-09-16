@@ -60,6 +60,10 @@ class Registry(ABC):
         """Store a face and its identity. Auto-commits."""
 
     @abstractmethod
+    def remove(self, identity: Identity) -> None:
+        """Remove an identity and all its faces. Auto-commits."""
+
+    @abstractmethod
     def __iter__(self) -> Iterator[Tuple[FacePatch, Identity]]:
         """Iterate over face patches and their identities."""
 

@@ -19,6 +19,11 @@ class InMemoryRegistry(Registry):
     def add(self, face_patch: FacePatch, identity: Identity) -> None:
         self.data.add((face_patch, identity))
 
+    def remove(self, identity: Identity) -> None:
+        self.data = {
+            (face_patch, id_) for face_patch, id_ in self.data if id_ != identity
+        }
+
     def __iter__(self) -> Iterator[Tuple[FacePatch, Identity]]:
         return iter(self.data)
 
@@ -56,6 +61,12 @@ class PickleRegistry(Registry):
                 },
                 registry_file,
             )
+
+    def remove(self, identity: Identity) -> None:
+        self.data = {
+            (face_patch, id_) for face_patch, id_ in self.data if id_ != identity
+        }
+        self._save()
 
     def add(self, face_patch: FacePatch, identity: Identity) -> None:
         # NOTE: tensor hashes differ even if they are have identical values

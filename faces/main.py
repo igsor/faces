@@ -89,6 +89,16 @@ class Main:
             type=Path,
             help="images on which to apply face detection.",
         )
+        # remove
+        register_parser = database_subparsers.add_parser(
+            "remove", help="remove identities from the registry"
+        )
+        register_parser.add_argument(
+            "identities",
+            nargs="+",
+            type=Identity,
+            help="identities to remove from the database.",
+        )
 
         # parse args
         args = parser.parse_args(argv)
@@ -113,6 +123,9 @@ class Main:
             if args.dbaction == "add":
                 for path in args.images:
                     self.register(builder, path, args.identity)
+            elif args.dbaction == "remove":
+                for identity in args.identities:
+                    self.remove(builder, identity)
             else:
                 raise ValueError(args.dbaction)
         else:
@@ -138,7 +151,13 @@ class Main:
             ),
         )
 
-    def register(self, builder: Builder, path: Path) -> None:
+    def remove(self, builder: Builder, identity: Identity) -> None:
+        """Remove an identity (and all of its faces) from the registry."""
+        builder.registry.remove(identity)
+
+    def register(
+        self, builder: Builder, path: Path
+    ) -> None:
         """Extract faces from an image, add them to a face registry.
         If *path* is a file, its filename is used as identity.
         If *path* is a directory, its folder name is used as identity for all

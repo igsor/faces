@@ -39,6 +39,15 @@ class TestInMemoryRegistry(unittest.TestCase):
         self.assertEqual(len(registry.data), 6)
         self.assertSetEqual(set(registry.data), set(zip(patches, queries)))
 
+    def test_remove(self) -> None:
+        registry, queries, patches = self._initialize_registry()
+        self.assertEqual(len(registry.data), 6)
+        self.assertSetEqual(set(registry.data), set(zip(patches, queries)))
+        registry.remove("eric-idle.npy")
+        registry.remove("terry-gilliam.npy")
+        registry.remove("not in the database")
+        self.assertEqual(len(registry.data), 4)
+
     def test_query(self) -> None:
         registry, queries, patches = self._initialize_registry()
         self.assertSetEqual(set(registry), set(zip(patches, queries)))
@@ -95,6 +104,15 @@ class TestPickleRegistry(unittest.TestCase):
             registry.add(patch, identity)
 
         return registry, queries, patches
+
+    def test_remove(self) -> None:
+        registry, queries, patches = self._initialize_registry()
+        self.assertSetEqual(set(registry.data), set(zip(patches, queries)))
+        self.assertEqual(len(registry.data), 6)
+        registry.remove("eric-idle.npy")
+        registry.remove("terry-gilliam.npy")
+        registry.remove("not in the database")
+        self.assertEqual(len(registry.data), 4)
 
     def test_add(self) -> None:
         registry, queries, patches = self._initialize_registry()

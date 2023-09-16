@@ -55,6 +55,13 @@ class TestMain(unittest.TestCase):
         )
         self.assertEqual(len(self.builder.registry), 5)
 
+    def test_remove(self) -> None:
+        self.assertEqual(len(self.builder.registry), 4)
+        Main().remove(self.builder, "terry-jones.npy")
+        Main().remove(self.builder, "terry-gilliam.npy")
+        Main().remove(self.builder, "not present")
+        self.assertEqual(len(self.builder.registry), 2)
+
 
 if __name__ == "__main__":
     unittest.main()
