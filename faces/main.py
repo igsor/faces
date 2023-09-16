@@ -62,21 +62,28 @@ class Main:
             type=Path,
             help="images on which to apply face detection.",
         )
-        # register
-        register_parser = subparsers.add_parser(
-            "register", help="add faces to the registry"
-        )
-        register_parser.add_argument(
-            "images",
-            nargs="+",
-            type=Path,
-            help="images on which to apply face detection.",
-        )
         # identify
         identify_parser = subparsers.add_parser(
             "identify", help="identify faces in images"
         )
         identify_parser.add_argument(
+            "images",
+            nargs="+",
+            type=Path,
+            help="images on which to apply face detection.",
+        )
+        # database commands
+        database_parser = subparsers.add_parser(
+            "db", help="query or manipulate the faces database"
+        )
+        database_subparsers = database_parser.add_subparsers(
+            dest="dbaction", required=True, help="choose what to do"
+        )
+        # register
+        register_parser = database_subparsers.add_parser(
+            "add", help="add faces to the registry"
+        )
+        register_parser.add_argument(
             "images",
             nargs="+",
             type=Path,
@@ -102,9 +109,12 @@ class Main:
         elif args.action == "identify":
             for path in args.images:
                 self.identify(builder, Image.open(path)).show()
-        elif args.action == "register":
-            for path in args.images:
-                self.register(builder, path)
+        elif args.action == "db":
+            if args.dbaction == "add":
+                for path in args.images:
+                    self.register(builder, path, args.identity)
+            else:
+                raise ValueError(args.dbaction)
         else:
             raise ValueError(args.action)
 
