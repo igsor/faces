@@ -175,7 +175,10 @@ class Main:
         builder.registry.remove(identity)
 
     def register(
-            self, builder: Builder, path: Path, identity: Optional[Identity] = None,
+        self,
+        builder: Builder,
+        path: Path,
+        identity: Optional[Identity] = None,
     ) -> None:
         """Extract faces from an image, add them to a face registry.
         If *path* is a file, its filename is used as identity.
