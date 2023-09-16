@@ -4,6 +4,7 @@ import argparse
 import logging
 import sys
 from pathlib import Path
+from typing import Optional
 
 import matplotlib.pylab as plt
 from PIL import Image as PILImage
@@ -84,6 +85,12 @@ class Main:
             "add", help="add faces to the registry"
         )
         register_parser.add_argument(
+            "--identity",
+            help="set the name manually.",
+            type=Identity,
+            default=None,
+        )
+        register_parser.add_argument(
             "images",
             nargs="+",
             type=Path,
@@ -156,7 +163,7 @@ class Main:
         builder.registry.remove(identity)
 
     def register(
-        self, builder: Builder, path: Path
+            self, builder: Builder, path: Path, identity: Optional[Identity] = None,
     ) -> None:
         """Extract faces from an image, add them to a face registry.
         If *path* is a file, its filename is used as identity.
@@ -169,6 +176,8 @@ class Main:
         """
 
         def _path_to_identity(path: Path) -> Identity:
+            if identity:
+                return identity
             return Identity(path.stem.lower().replace("-", "_").replace("_", " "))
 
         def _add_face(path: Path, label: Path):
