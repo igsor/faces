@@ -160,7 +160,7 @@ Use the following command to do so for the an example image.
 Note that you'll need to run this command no matter whether you continue with
 the command-line or python shell.
 ```bash
-faces register data/douglas_adams.jpg
+faces db add data/douglas_adams.jpg
 ```
 
 This command detects Douglas Adams' face and adds it to the database (stored in `~/.faces.pkl` by default).
@@ -223,7 +223,4 @@ To do so, have a look at the [face identification tuning notebook](https://githu
 
 [^1]: F. Schroff, D. Kalenichenko, J. Philbin. FaceNet: A Unified Embedding for Face Recognition and Clustering, arXiv:1503.03832, 2015. [PDF](https://arxiv.org/pdf/1503.03832.pdf)
 [^2]: [https://github.com/timesler/facenet-pytorch](https://github.com/timesler/facenet-pytorch)
-
-
-
 
