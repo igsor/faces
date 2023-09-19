@@ -12,6 +12,7 @@ from PIL import Image as PILImage
 
 from faces import Builder, Identity, Image
 from faces.builder import DefaultBuilder
+from faces.live import Live
 
 
 class Main:
@@ -49,6 +50,10 @@ class Main:
         # actions
         subparsers = parser.add_subparsers(
             dest="action", required=True, help="choose what to do"
+        )
+        # live
+        live_parser = subparsers.add_parser(
+            "live", help="perform live detection and identification through a webcam"
         )
         # detect
         detect_parser = subparsers.add_parser("detect", help="detect faces in images")
@@ -97,8 +102,8 @@ class Main:
             type=Path,
             help="images on which to apply face detection.",
         )
-        # dump
-        database_subparsers.add_parser("dump", help="dump face database")
+        # list
+        database_subparsers.add_parser("list", help="list face database")
         # remove
         register_parser = database_subparsers.add_parser(
             "remove", help="remove identities from the registry"
@@ -120,7 +125,9 @@ class Main:
         builder = DefaultBuilder.from_args(args)
 
         # take action
-        if args.action == "detect":
+        if args.action == "live":
+            self.live(builder)
+        elif args.action == "detect":
             detect = (
                 self.detect_with_probability if args.show_probability else self.detect
             )
@@ -133,8 +140,8 @@ class Main:
             if args.dbaction == "add":
                 for path in args.images:
                     self.register(builder, path, args.identity)
-            elif args.dbaction == "dump":
-                self.dump(builder)
+            elif args.dbaction == "list":
+                self.list_db(builder)
             elif args.dbaction == "remove":
                 for identity in args.identities:
                     self.remove(builder, identity)
@@ -142,6 +149,10 @@ class Main:
                 raise ValueError(args.dbaction)
         else:
             raise ValueError(args.action)
+
+    def live(self, builder: Builder) -> None:
+        """Perform live detection and identification via a webcam."""
+        Live(builder).run()
 
     def detect(self, builder: Builder, image: Image) -> PILImage.Image:
         """Return an image where detected faces are highlighted."""
@@ -163,7 +174,7 @@ class Main:
             ),
         )
 
-    def dump(self, builder: Builder) -> None:
+    def list_db(self, builder: Builder) -> None:
         """Print a summary of the registry's content."""
         for identity, count in Counter(
             [identity for patch, identity in builder.registry]

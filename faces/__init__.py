@@ -17,6 +17,7 @@ from faces.types import (
     FaceProbability,
     Identity,
     Image,
+    VideoFrame,
 )
 
 

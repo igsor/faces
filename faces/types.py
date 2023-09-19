@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from collections import namedtuple
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Optional, Tuple
@@ -15,6 +16,8 @@ FaceEncoding = torch.Tensor
 FacePatch = torch.Tensor
 FaceProbability = float
 Identity = str
+
+VideoFrame = namedtuple("VideoFrame", ["rval", "frame"])
 
 
 ## complex types
