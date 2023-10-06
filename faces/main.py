@@ -55,6 +55,9 @@ class Main:
         live_parser = subparsers.add_parser(
             "live", help="perform live detection and identification through a webcam"
         )
+        live_parser.add_argument(
+            "--video-device", type=int, default=0, help="Video device number"
+        )
         # detect
         detect_parser = subparsers.add_parser("detect", help="detect faces in images")
         detect_parser.add_argument(
@@ -126,7 +129,7 @@ class Main:
 
         # take action
         if args.action == "live":
-            self.live(builder)
+            self.live(builder, args.video_device)
         elif args.action == "detect":
             detect = (
                 self.detect_with_probability if args.show_probability else self.detect
@@ -150,9 +153,9 @@ class Main:
         else:
             raise ValueError(args.action)
 
-    def live(self, builder: Builder) -> None:
+    def live(self, builder: Builder, video_device: int) -> None:
         """Perform live detection and identification via a webcam."""
-        Live(builder).run()
+        Live(builder, video_device=video_device).run()
 
     def detect(self, builder: Builder, image: Image) -> PILImage.Image:
         """Return an image where detected faces are highlighted."""

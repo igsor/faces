@@ -18,17 +18,19 @@ class Live:
 
     window_name: str
 
-    capture: Any  # FIXME
+    capture: cv2.VideoCapture
 
     identified_in_session: Set[Identity]
 
-    def __init__(self, builder: Builder, window_name: str = WINDOW_NAME):
+    def __init__(
+        self, builder: Builder, window_name: str = WINDOW_NAME, video_device: int = 0
+    ):
         self.builder = builder
         self.window_name = window_name
         # initialize output window
         cv2.namedWindow(self.window_name)
         # initialize video capture
-        self.capture = cv2.VideoCapture(0)
+        self.capture = cv2.VideoCapture(video_device)
         # initialize session
         self.identified_in_session = set()
 
