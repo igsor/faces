@@ -30,11 +30,12 @@ setup(
     # dependencies
     python_requires=">=3.7",
     install_requires=(
-        'facenet_pytorch',
-        'matplotlib',
-        'numpy',
-        'pillow',
-        'torch',
+        'matplotlib==3.8.2',
+        'numpy==1.26.2',
+        'opencv-python==4.8.1.78',
+        'pillow==10.1.0',
+        'torch==2.0.1',
+        'facenet_pytorch==2.5.3',
         ),
     extras_require={
         'dev': [

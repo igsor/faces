@@ -45,50 +45,83 @@ to get better performance on your specific image library.
 
 Set up a virtual environment:
 
-    $ virtualenv env
-    $ source env/bin/activate
+```bash
+virtualenv env
+source env/bin/activate
+```
 
-**NOTE**: install torch according to https://pytorch.org before continuing!
+**NOTE**: On Raspberry Pi, install numpy and pillow before continuing:
+```bash
+pip install numpy==1.26.2 pillow==10.1.0
+```
+
+**NOTE**: install torch version 2.0.1 according to https://pytorch.org before continuing!
+If you don't have a GPU, i.e., want to run everything on the **CPU**, use
+```bash
+pip install torch==2.0.1 torchvision==0.15.2 --index-url https://download.pytorch.org/whl/cpu
+```
+
+If you have a **GPU**, use
+```bash
+pip install torch==2.0.1 torchvision==0.15.2
+```
+
 
 Install faces as editable from the git repository:
 
-    $ git clone https://github.com/igsor/faces
-    $ cd faces
-    $ pip install -e .
+```bash
+git clone https://github.com/igsor/faces
+cd faces
+pip install -e .
+```
 
 If you want to tune the detection and identification sensitivity in the notebooks, install faces with the respective extras:
 
-    $ pip install -e ".[notebook]"
+```bash
+pip install -e ".[notebook]"
+```
 
 **NOTE**: (optional) install ipython kernel with the following command
 
-    $ python -m ipykernel install --user --name faces --display-name "Faces"
+```bash
+python -m ipykernel install --user --name faces --display-name "Faces"
+```
 
 If you want to develop (*dev*), install faces with the respective extras:
 
-    $ pip install -e ".[dev]"
+```bash
+pip install -e ".[dev]"
+```
 
 To ensure code style discipline, run the following commands:
 
-    $ isort faces
-    $ black faces
-    $ coverage run ; coverage html ; xdg-open .htmlcov/index.html
-    $ pylint faces
-    $ mypy
+```bash
+isort faces
+black faces
+coverage run ; coverage html ; xdg-open .htmlcov/index.html
+pylint faces
+mypy
+```
 
 To build the package, do:
 
-    $ python -m build
+```bash
+python -m build
+```
 
 To run only the tests (without coverage), run the following command from the **test folder**:
 
-    $ python -m unittest
+```bash
+python -m unittest
+```
 
 To build the documentation, run the following commands from the **docs folder**:
 
-    $ sphinx-apidoc -f -o source/api ../faces/ --module-first -d 1 --separate
-    $ make html
-    $ xdg-open build/html/index.html
+```bash
+sphinx-apidoc -f -o source/api ../faces/ --module-first -d 1 --separate
+make html
+xdg-open build/html/index.html
+```
 
 
 ## Face detection
