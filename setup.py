@@ -57,5 +57,8 @@ setup(
             'tqdm',
             'nbformat>=4.2.0',
             ],
+        'web': [
+            'Flask==3.0.0',
+            ],
         },
 )

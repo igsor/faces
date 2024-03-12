@@ -75,6 +75,11 @@ cd faces
 pip install -e .
 ```
 
+If you want to run the web example, do:
+```bash
+pip install -e ".[web]"
+```
+
 If you want to tune the detection and identification sensitivity in the notebooks, install faces with the respective extras:
 
 ```bash
