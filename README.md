@@ -256,6 +256,21 @@ So, you're again faced with this trade-off,
 and only you can decide what the correct cut-off value is.
 To do so, have a look at the [face identification tuning notebook](https://github.com/igsor/faces/blob/main/notebooks/identify.ipynb).
 
+## Live face detection, identification, and registration
+
+You can start faces in live mode that continuously fetches images from a webcam,
+then performs face detection and identification. Run this command to start the live view:
+```bash
+faces live
+```
+
+This opens a window where you'll see the camera feed and detected/identified faces.
+Press ESC to close the window and quit.
+Press SPACE to save the current image into a file.
+Last, if you press ENTER, you'll be promted for a name (in the terminal where you started `faces`!).
+Enter the name and press ENTER again to link the currently detected face with the name you just gave.
+From now on, this name and image will be used for identification.
+
 
 ## References
 
